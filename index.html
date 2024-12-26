@@ -7,10 +7,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
     .header-content {
-        transition: max-height 0.3s ease, margin-top 0.3s ease;
-        max-height: 200px;
+        transition: transform 0.3s ease;
+        transform: translateY(calc(var(--scroll) * -100px));
+        opacity: calc(1 - var(--scroll));
         overflow: hidden;
-        margin-top: 0;
     }
 
     .header-wrapper {
@@ -21,21 +21,17 @@
         will-change: transform; /* Update to reflect transformation behavior */
     }
 
-    .header-wrapper.scrolled .header-content {
+    .scrolled .header-content {
         max-height: 0;
         margin-top: -100px; /* Установите отрицательное значение для смещения вверх */
     }
-
-    /* .header-wrapper.scrolled .logo-title {
-        transform: translateY(-100%); 
-    } 
-    */
 
     .logo-title {
         transition: padding 0.3s ease, font-size 0.3s ease;
         padding: 1.5rem 0;
         font-size: 2rem;
         white-space: nowrap;
+        background-color: white;
     }
 
     .article-content {
@@ -92,6 +88,11 @@
                         <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                         <p class="mb-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                         <p class="mb-4">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                        <p class="mb-4">Aliquam erat volutpat. Suspendisse potenti. Phasellus egestas tellus rutrum tellus pellentesque laoreet. Donec lacus nunc, viverra nec, blandit vel, egestas et, augue.</p>
+                        <p class="mb-4">Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In ac dui quis mi consectetuer lacinia. Nam adipiscing, felis ut bibendum tincidunt, nisi arcu aliquet nisi, eu pharetra nulla sapien non risus.</p>
+                        <p class="mb-4">Praesent euismod suscipit tortor vitae laoreet. Sed nonummy nunc sit amet ante venenatis dapibus. Aenean id libero vel justo dapibus faucibus nec ac magna.</p>
+                        <p class="mb-4">Fusce ac felis sit amet ligula pharetra condimentum. Morbi euismod magna eget lectus tincidunt, ac varius ligula consectetur. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+                        <p class="mb-4">Donec in metus eget enim convallis feugiat. Proin euismod libero ut velit dictum, vel tincidunt purus vehicula. Donec nec orci vitae metus condimentum gravida.</p>
                     </div>
                 </div>
                 <div class="mt-6 text-right">
@@ -147,26 +148,18 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const header = document.querySelector('.header-wrapper');
-            const headerContent = header.querySelector('.header-content');
-            const logoTitle = header.querySelector('.logo-title');
-            let lastScroll = 0;
+            // const headerContent = document.querySelector('.header-content');
+    
+            const handleScroll = () => {
+                const scrollRatio = window.pageYOffset / (document.body.offsetHeight - window.innerHeight);
+                console.log(scrollRatio);
+                document.body.style.setProperty('--scroll', scrollRatio);
 
-            window.addEventListener('scroll', () => {
-                const currentScroll = window.pageYOffset;
+            // Применяем трансформацию к headerContent
+            // headerContent.style.transform = `translateY(calc(var(--scroll) * -200px))`;
+        };
 
-                if (currentScroll > lastScroll && currentScroll > 100) {
-                    if (!header.classList.contains('scrolled')) {
-                        header.classList.add('scrolled');
-                    }
-                } else if (currentScroll < lastScroll && currentScroll < 100) {
-                    if (header.classList.contains('scrolled')) {
-                        header.classList.remove('scrolled');
-                    }
-                }
-
-                lastScroll = currentScroll;
-            });
+        window.addEventListener('scroll', handleScroll);
         });
     </script>
 </body>
