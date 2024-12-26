@@ -6,56 +6,59 @@
     <title>Terre Humaine</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
-        .header-content {
-            transition: all 0.3s ease;
-            max-height: 200px;
-            overflow: hidden;
-        }
+    .header-content {
+        transition: max-height 0.3s ease, margin-top 0.3s ease;
+        max-height: 200px;
+        overflow: hidden;
+        margin-top: 0;
+    }
 
-        .header-wrapper {
-            position: sticky;
-            top: 0;
-            background: white;
-            z-index: 50;
-            will-change: max-height, padding;
-        }
+    .header-wrapper {
+        position: sticky;
+        top: 0;
+        background: white;
+        z-index: 50;
+        will-change: transform; /* Update to reflect transformation behavior */
+    }
 
-        .header-wrapper.scrolled .header-content {
-            max-height: 0;
-        }
+    .header-wrapper.scrolled .header-content {
+        max-height: 0;
+        margin-top: -100px; /* Установите отрицательное значение для смещения вверх */
+    }
 
-        .header-wrapper.scrolled .logo-title {
-            padding: 0.5rem 0;
-            font-size: 1.5rem; /* Вместо использования scale */
-        }
+    /* .header-wrapper.scrolled .logo-title {
+        transform: translateY(-100%); 
+    } 
+    */
 
-        .logo-title {
-            transition: all 0.3s ease;
-            padding: 1.5rem 0;
-            font-size: 2rem; /* Добавлено для плавного изменения размера шрифта */
-            white-space: nowrap;
-        }
+    .logo-title {
+        transition: padding 0.3s ease, font-size 0.3s ease;
+        padding: 1.5rem 0;
+        font-size: 2rem;
+        white-space: nowrap;
+    }
 
-        .article-content {
-            padding: 20px;
-        }
-        .article-main-text * {
-            text-align: justify;
-        }
+    .article-content {
+        padding: 20px;
+    }
 
-        .article-image {
-            width: 30%;
-            max-width: 400px;
-            margin: 0 0 20px 20px;
-            display: block;
-            float: right;
-        }
-        
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
-        }
+    .article-main-text * {
+        text-align: justify;
+    }
+
+    .article-image {
+        width: 30%;
+        max-width: 400px;
+        margin: 0 0 20px 20px;
+        display: block;
+        float: right;
+    }
+
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
 
     </style>
 </head>
@@ -145,15 +148,21 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const header = document.querySelector('.header-wrapper');
+            const headerContent = header.querySelector('.header-content');
+            const logoTitle = header.querySelector('.logo-title');
             let lastScroll = 0;
 
             window.addEventListener('scroll', () => {
                 const currentScroll = window.pageYOffset;
 
-                if (currentScroll > lastScroll && currentScroll > 100 && !header.classList.contains('scrolled')) {
-                    header.classList.add('scrolled');
-                } else if (currentScroll < lastScroll && currentScroll < 100 && header.classList.contains('scrolled')) {
-                    header.classList.remove('scrolled');
+                if (currentScroll > lastScroll && currentScroll > 100) {
+                    if (!header.classList.contains('scrolled')) {
+                        header.classList.add('scrolled');
+                    }
+                } else if (currentScroll < lastScroll && currentScroll < 100) {
+                    if (header.classList.contains('scrolled')) {
+                        header.classList.remove('scrolled');
+                    }
                 }
 
                 lastScroll = currentScroll;
