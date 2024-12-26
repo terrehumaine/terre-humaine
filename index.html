@@ -8,8 +8,8 @@
     <style>
     .header-content {
         transition: transform 0.3s ease;
-        transform: translateY(calc(var(--scroll) * -100px));
-        opacity: calc(1 - var(--scroll));
+        transform: translateY(clamp(0px, calc(var(--scroll) * 3 * -140px), 140px));
+        opacity: calc(1 - var(--scroll) * 3);
         overflow: hidden;
     }
 
@@ -18,7 +18,8 @@
         top: 0;
         background: white;
         z-index: 50;
-        will-change: transform; /* Update to reflect transformation behavior */
+        will-change: transform; 
+        height: calc(100px + 140px * (1 - var(--scroll) * 3));
     }
 
     .scrolled .header-content {
@@ -62,7 +63,7 @@
     <div class="header-wrapper shadow-md">
         <div class="container mx-auto px-4">
             <div class="logo-title flex items-center justify-start">
-                <img src="/img/logo.png" alt="Logo" class="h-16 md:h-20">
+                <img src="img/logo.png" alt="Logo" class="h-16 md:h-20">
                 <h1 class="text-2xl md:text-3xl font-serif ml-4">Terre Humaine</h1>
             </div>
             <div class="header-content">
@@ -83,7 +84,7 @@
             <div class="bg-white p-6 rounded-lg shadow-md mb-8 clearfix">
                 <h2 class="text-2xl font-bold mb-6">Titre de l'Article</h2>
                 <div class="article-content clearfix">
-                    <img src="/articles/2024-12/img1.pgn.jpg" alt="Article image" class="article-image rounded">
+                    <img src="articles/2024-12/img1.pgn.jpg" alt="Article image" class="article-image rounded">
                     <div class="article-main-text">
                         <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                         <p class="mb-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
