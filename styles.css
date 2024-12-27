@@ -1,0 +1,53 @@
+.header-wrapper {
+    position: sticky;
+    top: 0;
+    background: white;
+    /* z-index: 50; */
+    will-change: transform; 
+    height: calc(100px + 140px * (1 - var(--scroll) * 3));
+    --uplift: clamp(-140px, calc(var(--scroll) * 3 * -140px), 0px);
+}
+
+.logo-title {
+    transition: padding 0.3s ease, font-size 0.3s ease;
+    padding: 1.5rem 0;
+    font-size: 2rem;
+    white-space: nowrap;
+    background-color: white;
+}
+
+.header-content {
+    transition: transform 0.3s ease;
+    transform: translateY(var(--uplift));
+    opacity: calc(1 - var(--scroll) * 3);
+    overflow: hidden;
+}
+
+
+/* .scrolled .header-content {
+    max-height: 0;
+    margin-top: -100px; 
+} */
+
+
+.article-content {
+    padding: 20px;
+}
+
+.article-main-text * {
+    text-align: justify;
+}
+
+.article-image {
+    width: 30%;
+    max-width: 400px;
+    margin: 0 0 20px 20px;
+    display: block;
+    float: right;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}

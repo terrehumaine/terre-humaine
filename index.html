@@ -5,61 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terre Humaine</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <style>
-    .header-content {
-        transition: transform 0.3s ease;
-        transform: translateY(clamp(0px, calc(var(--scroll) * 3 * -140px), 140px));
-        opacity: calc(1 - var(--scroll) * 3);
-        overflow: hidden;
-    }
-
-    .header-wrapper {
-        position: sticky;
-        top: 0;
-        background: white;
-        z-index: 50;
-        will-change: transform; 
-        height: calc(100px + 140px * (1 - var(--scroll) * 3));
-    }
-
-    .scrolled .header-content {
-        max-height: 0;
-        margin-top: -100px; /* Установите отрицательное значение для смещения вверх */
-    }
-
-    .logo-title {
-        transition: padding 0.3s ease, font-size 0.3s ease;
-        padding: 1.5rem 0;
-        font-size: 2rem;
-        white-space: nowrap;
-        background-color: white;
-    }
-
-    .article-content {
-        padding: 20px;
-    }
-
-    .article-main-text * {
-        text-align: justify;
-    }
-
-    .article-image {
-        width: 30%;
-        max-width: 400px;
-        margin: 0 0 20px 20px;
-        display: block;
-        float: right;
-    }
-
-    .clearfix::after {
-        content: "";
-        clear: both;
-        display: table;
-    }
-
-    </style>
+    <link href="styles.css" rel="stylesheet">
+    <!-- <style>
+    </style> -->
 </head>
 <body class="bg-gray-50">
+    <script src="main.js"></script>
+    <script type="application/json">
+        const currentNumero = 350,
+            currentFolder = "2024-12";
+    </script>
     <div class="header-wrapper shadow-md">
         <div class="container mx-auto px-4">
             <div class="logo-title flex items-center justify-start">
@@ -68,8 +23,8 @@
             </div>
             <div class="header-content">
                 <div class="text-gray-600 italic text-sm max-w-lg mx-auto text-center">
-                    <p class="mb-2">"Rien de ce qui est humain ne m'est étranger." - Térence</p>
-                    <p>"Pendant que nous sommes parmi les hommes, pratiquons l'humanité." - Sénèque</p>
+                    <p class="mb-2"><i>"Rien de ce qui est humain ne m'est étranger."</i> - Térence</p>
+                    <p class="mb-2"><i>"Pendant que nous sommes parmi les hommes, pratiquons l'humanité."</i> - Sénèque</p>
                 </div>
                 <div class="text-center mt-6 text-sm text-gray-500">
                     <p>Mensuel de l'Association Entente Européenne pour une Terre Humaine</p>
@@ -84,7 +39,7 @@
             <div class="bg-white p-6 rounded-lg shadow-md mb-8 clearfix">
                 <h2 class="text-2xl font-bold mb-6">Titre de l'Article</h2>
                 <div class="article-content clearfix">
-                    <img src="articles/2024-12/img1.pgn.jpg" alt="Article image" class="article-image rounded">
+                    <img src="articles/2024-12/img1.jpg" alt="Article image" class="article-image rounded">
                     <div class="article-main-text">
                         <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                         <p class="mb-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>

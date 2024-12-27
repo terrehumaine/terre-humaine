@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Redirection en cours...</title>
+    <script>
+        // Récupérer le chemin actuel
+        var path = window.location.pathname;
+        // URL de base de votre site sur GitHub Pages
+        var baseUrl = '/';
+        // URL complète pour la redirection
+        var redirectUrl = baseUrl + 'index.html' + window.location.search + window.location.hash;
+        
+        // Effectuer la redirection
+        window.location.replace(redirectUrl);
+    </script>
+</head>
+<body>
+    <p>Si vous n'êtes pas redirigé automatiquement, veuillez <a href="index.html">cliquer ici</a>.</p>
+</body>
+</html>
