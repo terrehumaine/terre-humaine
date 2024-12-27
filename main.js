@@ -20,7 +20,7 @@ async function fetchJson(url, options = {}) {
 };
 
 function getIssueData(folder){
-    return fetchJson(`articles/${folder}.json`);
+    return fetchJson(`articles/${folder}/issue.json`);
 }
 
 function getUrlParam(parameter) {
