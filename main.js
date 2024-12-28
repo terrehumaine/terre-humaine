@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
             
             const secondaryArticlesContainer = document.querySelector('.secondary-articles');
+            secondaryArticlesContainer.innerHTML = '';
             const secondaryArticles = data.articlesMineurs.map(createSecondaryArticle);
             secondaryArticlesContainer.append(...secondaryArticles);
         })

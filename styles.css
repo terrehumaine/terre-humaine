@@ -37,6 +37,9 @@
 .article-main-text * {
     text-align: justify;
 }
+.article-main-text p {
+    margin-bottom: 1rem;
+}
 
 .article-image {
     width: 30%;
