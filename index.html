@@ -135,16 +135,20 @@
         });
 
         const stickyHead = document.querySelector('.logo-title');
+        const subHead = document.querySelector('.header-wrapper');
 
         function updateStickyPosition() {
-            const height = stickyHead.offsetHeight;
-            document.body.style.setProperty('--sticky-title-height', height);
+            const stickyHeadHeight = stickyHead.offsetHeight;
+            const subHeadHeight = subHead.offsetHeight;
+            const subHeadTop = stickyHeadHeight - subHeadHeight;
+            subHead.style.setProperty('top', `${subHeadTop}px`);
         }
 
         updateStickyPosition();
         window.addEventListener('resize', updateStickyPosition);
         const observer = new ResizeObserver(updateStickyPosition);
         observer.observe(stickyHead);
+        observer.observe(subHead);
     </script>
 </body>
 </html>
