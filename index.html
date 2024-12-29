@@ -11,10 +11,6 @@
 </head>
 <body class="bg-gray-50">
     <script src="main.js"></script>
-    <script type="application/json">
-        const currentNumero = 350,
-            currentFolder = "2024-12";
-    </script>
     <div class="header-wrapper shadow-md">
         <div class="container mx-auto px-4">
             <div class="logo-title flex items-center justify-start">
@@ -22,13 +18,13 @@
                 <h1 class="text-2xl md:text-3xl font-serif ml-4">Terre Humaine</h1>
             </div>
             <div class="header-content">
-                <div class="text-gray-600 italic text-sm max-w-lg mx-auto text-center">
-                    <p class="mb-2"><i>"Rien de ce qui est humain ne m'est étranger."</i> - Térence</p>
-                    <p class="mb-2"><i>"Pendant que nous sommes parmi les hommes, pratiquons l'humanité."</i> - Sénèque</p>
+                <div class="text-gray-600 italic text-sm mx-auto text-left">
+                    <p class="mb-1"><b><i>"Rien de ce qui est humain ne m'est étranger."</i></b> - Térence</p>
+                    <p class="mb-1"><b><i>"Pendant que nous sommes parmi les hommes, pratiquons l'humanité."</i></b> - Sénèque</p>
                 </div>
-                <div class="text-center mt-6 text-sm text-gray-500">
-                    <p>Mensuel de l'Association Entente Européenne pour une Terre Humaine</p>
-                    <p><span class="issue-period">Mars 2024</span> - n°<span class="issue-number">350</span></p>
+                <div class="flex text-gray-500">
+                    <div class="flex-1 w-2/3">Mensuel de l'Association Entente Européenne pour une Terre Humaine</div>
+                    <div class="flex justify-end w-1/3"><span class="issue-period">Xxxx 0000</span><span> -&nbsp;n°</span><span class="issue-number">000</span></div>
                 </div>
             </div>
         </div>
@@ -37,18 +33,11 @@
     <main class="container mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8">
         <article class="lg:w-3/4">
             <div class="bg-white p-6 rounded-lg shadow-md mb-8 clearfix">
-                <h2 class="article-title font-bold mb-6">Titre de l'Article</h2>
+                <h2 class="article-title text-3xl font-bold mb-6">Titre de l'Article</h2>
                 <div class="article-content clearfix">
                     <img src="articles/2024-12/img1.jpg" alt="Article image" class="article-image rounded">
                     <div class="article-main-text">
                         <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                        <p class="mb-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                        <p class="mb-4">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-                        <p class="mb-4">Aliquam erat volutpat. Suspendisse potenti. Phasellus egestas tellus rutrum tellus pellentesque laoreet. Donec lacus nunc, viverra nec, blandit vel, egestas et, augue.</p>
-                        <p class="mb-4">Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; In ac dui quis mi consectetuer lacinia. Nam adipiscing, felis ut bibendum tincidunt, nisi arcu aliquet nisi, eu pharetra nulla sapien non risus.</p>
-                        <p class="mb-4">Praesent euismod suscipit tortor vitae laoreet. Sed nonummy nunc sit amet ante venenatis dapibus. Aenean id libero vel justo dapibus faucibus nec ac magna.</p>
-                        <p class="mb-4">Fusce ac felis sit amet ligula pharetra condimentum. Morbi euismod magna eget lectus tincidunt, ac varius ligula consectetur. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
-                        <p class="mb-4">Donec in metus eget enim convallis feugiat. Proin euismod libero ut velit dictum, vel tincidunt purus vehicula. Donec nec orci vitae metus condimentum gravida.</p>
                     </div>
                 </div>
                 <div class="mt-6 text-right">
@@ -105,18 +94,22 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // const headerContent = document.querySelector('.header-content');
     
             const handleScroll = () => {
-                const scrollRatio = window.pageYOffset / (document.body.offsetHeight - window.innerHeight);
-                console.log(scrollRatio);
+                const MAX_THRESHHOLD = 500;
+                const pageYOffset = window.pageYOffset,
+                    offsetHeight = document.body.offsetHeight,
+                    innerHeight = window.innerHeight;
+                const scrollRatio = Math.round(1000 * pageYOffset / (offsetHeight - innerHeight)) / 1000;
+                console.log({scrollRatio, pageYOffset, offsetHeight, innerHeight});
+                const yOffsetMax500 = Math.min(pageYOffset, MAX_THRESHHOLD);
                 document.body.style.setProperty('--scroll', scrollRatio);
+                document.body.style.setProperty('--y-offset', pageYOffset);
+                document.body.style.setProperty('--y-offset-max-500', yOffsetMax500);
 
-            // Применяем трансформацию к headerContent
-            // headerContent.style.transform = `translateY(calc(var(--scroll) * -200px))`;
-        };
+            };
 
-        window.addEventListener('scroll', handleScroll);
+            window.addEventListener('scroll', handleScroll);
         });
     </script>
 </body>

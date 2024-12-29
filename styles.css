@@ -1,11 +1,16 @@
-.header-wrapper {
+/* .header-wrapper {
+    --scroll-percent-max-500: calc(var(--y-offset-max-500) / 500);
+    --uplift: clamp(-140px, calc((1 - var(--scroll-percent-max-500)) * 3 * -140px), 0px);
+
     position: sticky;
     top: 0;
     background: white;
-    /* z-index: 50; */
+ 
     will-change: transform; 
-    height: calc(100px + 140px * (1 - var(--scroll) * 3));
-    --uplift: clamp(-140px, calc(var(--scroll) * 3 * -140px), 0px);
+    height: calc(100px + 140px * (1 - var(--scroll-percent-max-500) * 3));
+}
+.header-wrapper .container {
+    height: clamp(140px, calc(140px + (1 - var(--y-offset-max-500)) * 100px), 240px);
 }
 
 .logo-title {
@@ -18,10 +23,10 @@
 
 .header-content {
     transition: transform 0.3s ease;
-    transform: translateY(var(--uplift));
-    opacity: calc(1 - var(--scroll) * 3);
+    transform: translateY(calc(var(--scroll-percent-max-500) * -140px));
+    opacity: calc(1 - var(--scroll-percent-max-500) * 3);
     overflow: hidden;
-}
+} */
 
 
 /* .scrolled .header-content {
