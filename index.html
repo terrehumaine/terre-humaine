@@ -11,7 +11,29 @@
 </head>
 <body class="bg-gray-50">
     <script src="main.js"></script>
-    <div class="header-wrapper shadow-md">
+    <div class="logo-title flex items-center justify-start mx-auto px-4 py-2">
+        <img src="img/logo.png" alt="Logo" class="h-16 md:h-20">
+        <h1 class="text-2xl md:text-3xl font-serif ml-4">Terre Humaine</h1>
+    </div>
+    <div class="header-wrapper mx-2 shadow-md">
+        <div class="container">
+            <div class="header-content">
+                <div class="text-gray-600 italic text-sm mx-auto text-left">
+                    <p class="mb-1"><b><i>"Rien de ce qui est humain ne m'est étranger."</i></b> - Térence</p>
+                    <p class="mb-1"><b><i>"Pendant que nous sommes parmi les hommes, pratiquons l'humanité."</i></b> - Sénèque</p>
+                </div>
+                <div class="flex text-gray-500">
+                    <div class="flex-1 w-2/3">Mensuel de l'Association Entente Européenne pour une Terre Humaine</div>
+                    <div class="flex flex-col sm:flex-row justify-end w-1/3 text-right">
+                        <div class="issue-period">Xxxx 0000</div>
+                        <div class="hidden sm:block">&nbsp;-&nbsp;n°</div>
+                        <div class="issue-number">000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="header-wrapper shadow-md">
         <div class="container mx-auto px-4">
             <div class="logo-title flex items-center justify-start">
                 <img src="img/logo.png" alt="Logo" class="h-16 md:h-20">
@@ -28,7 +50,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <main class="container mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8">
         <article class="lg:w-3/4">
@@ -111,6 +133,18 @@
 
             window.addEventListener('scroll', handleScroll);
         });
+
+        const stickyHead = document.querySelector('.logo-title');
+
+        function updateStickyPosition() {
+            const height = stickyHead.offsetHeight;
+            document.body.style.setProperty('--sticky-title-height', height);
+        }
+
+        updateStickyPosition();
+        window.addEventListener('resize', updateStickyPosition);
+        const observer = new ResizeObserver(updateStickyPosition);
+        observer.observe(stickyHead);
     </script>
 </body>
 </html>

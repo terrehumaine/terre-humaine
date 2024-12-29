@@ -28,11 +28,25 @@
     overflow: hidden;
 } */
 
+.logo-title {
+    position: sticky;
+    top: 0;
+    background-color: #fff; /* Добавьте нужный цвет фона */
+    z-index: 1000; /* Чтобы элемент был поверх остального контента */
+  }
+  
+  .header-wrapper {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+  }
 
-/* .scrolled .header-content {
-    max-height: 0;
-    margin-top: -100px; 
-} */
+  /* .container {
+    position: relative;
+  } */
+
+
+
 
 
 .article-content {
