@@ -11,9 +11,23 @@
 </head>
 <body class="bg-gray-50">
     <script src="main.js"></script>
-    <div class="logo-title flex items-center justify-start mx-auto px-4 py-2">
-        <img src="img/logo.png" alt="Logo" class="h-16 md:h-20">
-        <h1 class="text-2xl md:text-3xl font-serif ml-4">Terre Humaine</h1>
+    <div class="logo-title flex items-center justify-between mx-auto px-4 py-2">
+        <div class="flex items-center">
+            <a href="/"><img src="/img/logo.png" alt="Logo" class="h-16 md:h-20"></a>
+            <h1 class="text-2xl md:text-3xl font-serif ml-4">Terre Humaine</h1>
+        </div>
+        <button id="menu-toggle" class="hamburger focus:outline-none">
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+        </button>
+        <nav id="mobile-menu" class="hidden absolute top-full right-0 bg-white shadow-md rounded-md w-48">
+            <ul class="flex flex-col p-4">
+                <li><a href="javascript:alert('Cette fonctionnalité est en développement')" class="block py-2 px-4 hover:bg-gray-100">Ajouter un article</a></li>
+                <!-- <li><a href="#" class="block py-2 px-4 hover:bg-gray-100">About</a></li>
+                <li><a href="#" class="block py-2 px-4 hover:bg-gray-100">Contact</a></li> -->
+            </ul>
+        </nav>
     </div>
     <div class="header-wrapper mx-2 shadow-md">
         <div class="container">
@@ -59,14 +73,14 @@
                 <div class="article-content clearfix">
                     <img src="articles/2024-12/img1.jpg" alt="Article image" class="article-image rounded">
                     <div class="article-main-text">
-                        <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
                     </div>
                 </div>
-                <div class="mt-6 text-right">
+                <div class="mt-0 text-right">
                     <p class="article-author ont-semibold">Auteur de l'article</p>
-                    <div class="article-postscriptums"></div>
                     <!-- <p class="text-sm text-gray-600 mt-2">Post-scriptum...</p> -->
                 </div>
+                <div class="article-postscriptums"></div>
             </div>
 
             <div class="bg-white p-6 rounded-lg shadow-md">
@@ -82,22 +96,22 @@
         </article>
 
         <aside class="lg:w-1/4">
-            <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <!-- <div class="bg-white p-6 rounded-lg shadow-md mb-6">
                 <button class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
                     Ajouter un article
                 </button>
-            </div>
+            </div> -->
 
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h3 class="text-xl font-bold mb-4">Archives</h3>
-                <ul class="space-y-2">
-                    <li class="hover:text-blue-600"><a href="#">Février 2024 - n°340</a></li>
+                <ul class="th-archives space-y-2">
+                    <!-- <li class="hover:text-blue-600"><a href="#">Février 2024 - n°340</a></li>
                     <li class="hover:text-blue-600"><a href="#">Janvier 2024 - n°339</a></li>
                     <li class="hover:text-blue-600"><a href="#">Décembre 2023 - n°338</a></li>
                     <li class="hover:text-blue-600"><a href="#">Novembre 2023 - n°337</a></li>
                     <li class="hover:text-blue-600"><a href="#">Octobre 2023 - n°336</a></li>
                     <li class="hover:text-blue-600"><a href="#">Septembre 2023 - n°335</a></li>
-                    <li class="hover:text-blue-600"><a href="#">Août 2023 - n°334</a></li>
+                    <li class="hover:text-blue-600"><a href="#">Août 2023 - n°334</a></li> -->
                 </ul>
             </div>
         </aside>
@@ -130,8 +144,14 @@
                 document.body.style.setProperty('--y-offset-max-500', yOffsetMax500);
 
             };
-
             window.addEventListener('scroll', handleScroll);
+
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+            });            
         });
 
         const stickyHead = document.querySelector('.logo-title');

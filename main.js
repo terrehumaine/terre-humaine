@@ -36,13 +36,7 @@ function period2Long(period){
 }
 
 
-/* 
-    <div class="border-l-4 border-gray-300 pl-4">
-        <h4 class="font-bold">Titre de la citation</h4>
-        <p class="italic my-2">"Texte de la citation..."</p>
-        <p class="text-sm text-gray-600">- Auteur</p>
-    </div>
-*/
+
 function createSecondaryArticle(data) {
     const article = document.createElement("div");
     article.className = "pl-4";
@@ -166,13 +160,54 @@ function createSecondaryArticle(data) {
     return article;
 }
   
+function issue2Page(data){
+    const issuePeriod = document.querySelector('.issue-period');
+    issuePeriod.innerText = period2Long(data.period);
+    const issueNumber = document.querySelector('.issue-number');
+    issueNumber.innerText = data.issueNumber;
+    
+    const mainArticleImage = document.querySelector('.article-image');
+    mainArticleImage.src = `articles/${data.period}/img1.jpg`
+    
+    const mainArticleTitle = document.querySelector('.article-title');
+    mainArticleTitle.innerText  = data.article.title;
+
+    const mainArticle = document.querySelector('.article-main-text');
+    mainArticle.innerHTML = data.article.html;
+    const mainArticleAuthor = document.querySelector('.article-author');
+    mainArticleAuthor.innerText = data.article.author;
+    const mainArticlePostscriptums = document.querySelector('.article-postscriptums');
+    mainArticlePostscriptums.innerHTML = '';
+    data.article.postScriptums.forEach((d, i)=>{
+        const ps = document.createElement("p");
+        ps.className = "text-sm text-gray-700";
+        ps.innerHTML = `<b>${'P'.repeat(i+1)}.S.</b> ${d}`;
+        mainArticlePostscriptums.append(ps);
+    });
+
+    
+    const secondaryArticlesContainer = document.querySelector('.secondary-articles');
+    secondaryArticlesContainer.innerHTML = '';
+    const secondaryArticles = data.articlesMineurs.map(createSecondaryArticle);
+    secondaryArticlesContainer.append(...secondaryArticles);
+}
+
+function fillArchiveList(data){
+    const archiveContainer = document.querySelector('.th-archives');
+    data.forEach(d=>{
+        const li = document.createElement("li");
+        li.className = 'hover:text-blue-600';
+        const tagName = d.fileOnly?"p":"a";
+        li.innerHTML = `<${tagName} href="/?period=${d.period}">${period2Long(d.period)} - n°${d.issueNumber}</${tagName}> (<a href="/archive/${d.file}"></a>)`;
+    })
+    // <li class="hover:text-blue-600"><a href="#">Février 2024 - n°340</a></li>
+}
 
 
 const dataStore = {};
 
-const urlPeriod = getUrlParam('period');
-
 const getDataJob = (new Promise((resolve, refect)=>{
+    const urlPeriod = getUrlParam('period');
     if(urlPeriod){
         resolve(urlPeriod);
         return ;
@@ -197,35 +232,11 @@ document.addEventListener('DOMContentLoaded', function() {
     getDataJob
         .then(()=>{
             const data = dataStore.currentIssue;
+            issue2Page(data);
 
-            const issuePeriod = document.querySelector('.issue-period');
-            issuePeriod.innerText = period2Long(data.period);
-            const issueNumber = document.querySelector('.issue-number');
-            issueNumber.innerText = data.issueNumber;
-            
-            const mainArticleImage = document.querySelector('.article-image');
-            mainArticleImage.src = `articles/${data.period}/img1.jpg`
-            
-            const mainArticleTitle = document.querySelector('.article-title');
-            mainArticleTitle.innerText  = data.article.title;
-        
-            const mainArticle = document.querySelector('.article-main-text');
-            mainArticle.innerHTML = data.article.html;
-            const mainArticleAuthor = document.querySelector('.article-author');
-            mainArticleAuthor.innerText = data.article.author;
-            const mainArticlePostscriptums = document.querySelector('.article-postscriptums');
-            mainArticlePostscriptums.innerHTML = '';
-            data.article.postScriptums.forEach((d, i)=>{
-                const ps = document.createElement("p");
-                ps.innerText = d;
-                mainArticlePostscriptums.append(ps);
-            });
-        
-            
-            const secondaryArticlesContainer = document.querySelector('.secondary-articles');
-            secondaryArticlesContainer.innerHTML = '';
-            const secondaryArticles = data.articlesMineurs.map(createSecondaryArticle);
-            secondaryArticlesContainer.append(...secondaryArticles);
-        })
+        });
+
+    fetchJson('archive.json')
+        .then(fillArchiveList);
 
 });
