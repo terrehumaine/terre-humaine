@@ -153,7 +153,7 @@ function createSecondaryArticle(data) {
     body.appendChild(readLessBtn);
 
     const author = document.createElement("p");
-    author.className = "text-sm text-gray-600";
+    author.className = "text-sm text-gray-600 text-right";
     author.innerText = data.author || '';
 
     article.append(title, body, author);
@@ -196,9 +196,13 @@ function fillArchiveList(data){
     const archiveContainer = document.querySelector('.th-archives');
     data.forEach(d=>{
         const li = document.createElement("li");
-        li.className = 'hover:text-blue-600';
-        const tagName = d.fileOnly?"p":"a";
-        li.innerHTML = `<${tagName} href="/?period=${d.period}">${period2Long(d.period)} - n°${d.issueNumber}</${tagName}> (<a href="/archive/${d.file}"></a>)`;
+        li.className = 'h_over:';
+        const tagName = d.fileOnly?"i":"a";
+        li.innerHTML = `<${tagName} href="/?period=${d.period}" class="${d.fileOnly?'':'underline text-blue-600'}">
+                ${period2Long(d.period)} - n°${d.issueNumber}
+            </${tagName}> 
+            (<a href="/archive/${d.file}" target="_blank" class="underline text-blue-600">télécharger</a>)`;
+        archiveContainer.append(li);
     })
     // <li class="hover:text-blue-600"><a href="#">Février 2024 - n°340</a></li>
 }
@@ -228,6 +232,7 @@ const getDataJob = (new Promise((resolve, refect)=>{
 
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('main.js: DOMContentLoaded');
     //wait for dataStore
     getDataJob
         .then(()=>{
