@@ -33,7 +33,12 @@ async function showOptions() {
     const apiInput = document.createElement('input');
     apiInput.type = 'text';
     apiInput.placeholder = 'Entrez la clé API';
-    apiInput.className = 'w-full p-2 mb-4 border border-gray-300 rounded';
+    apiInput.className = 'github-key-input w-full p-2 mb-4 border border-gray-300 rounded';
+
+    const githubKey = window.localStorage.getItem("githubKey");
+    if(githubKey){
+        apiInput.value = githubKey;
+    }
 
     apiSection.append(apiTitle, apiInput);
 
@@ -85,6 +90,9 @@ async function showOptions() {
         statusCell.className = 'border-b p-2';
         row.appendChild(statusCell);
 
+        row.th_fileName = item.file;
+        row.th_fileOnly = item.fileOnly;
+
         tbody.appendChild(row);
     });
     magazineTable.appendChild(tbody);
@@ -126,6 +134,38 @@ async function showOptions() {
 }
 
 function saveSettings() {
-    // Placeholder for saving logic
-    console.log('Save button clicked');
+    githubKeyInput = document.querySelector('.github-key-input');
+    const githubKey = githubKeyInput.value;
+    window.localStorage.setItem("githubKey", githubKey);
+    
+    gatherTableData();
+}
+
+function gatherTableData() {
+    const tableData = [];
+    const magazineTable = document.querySelector('table'); // Assuming there's only one table or modify selector if needed
+    const rows = magazineTable.querySelectorAll('tbody tr');
+    
+    rows.forEach(row => {
+        const issueNumber = row.cells[0].textContent;
+        const period = row.cells[1].textContent;
+        const statusSelect = row.cells[2].querySelector('select');
+        const status = statusSelect.value; // Selected status
+
+        // Create object for each row
+        const rowData = {
+            period: period,
+            issueNumber: Number(issueNumber),
+            file: `Terre Humaine - ${new Date(period).toLocaleString('fr-FR', { year: 'numeric', month: 'long' })}.docx`
+        };
+
+        // If "fileOnly" is meant to be determined by the status or any other logic, add logic here
+        if (status === 'archive') {
+            rowData.fileOnly = true;
+        }
+
+        tableData.push(rowData);
+    });
+
+    return tableData;
 }
