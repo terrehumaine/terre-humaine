@@ -1,3 +1,6 @@
+const GITHUB_OWNER = 'sen77',
+    GITHUB_REPO = 'sen77.github.io';
+
 async function fetchJson(url, options = {}) {
     try {
       const response = await fetch(url, {

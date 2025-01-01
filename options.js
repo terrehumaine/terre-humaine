@@ -138,7 +138,9 @@ function saveSettings() {
     const githubKey = githubKeyInput.value;
     window.localStorage.setItem("githubKey", githubKey);
     
-    gatherTableData();
+    const archiveData = gatherTableData();
+    pushJsonToGithub('tmp_archive.json', archiveData);
+    console.log({archiveData});
 }
 
 function gatherTableData() {
@@ -156,16 +158,51 @@ function gatherTableData() {
         const rowData = {
             period: period,
             issueNumber: Number(issueNumber),
-            file: `Terre Humaine - ${new Date(period).toLocaleString('fr-FR', { year: 'numeric', month: 'long' })}.docx`
+            status,
+            file: row.th_fileName, 
+            fileOnly: row.th_fileOnly
         };
-
-        // If "fileOnly" is meant to be determined by the status or any other logic, add logic here
-        if (status === 'archive') {
-            rowData.fileOnly = true;
-        }
 
         tableData.push(rowData);
     });
 
     return tableData;
+}
+
+function pushJsonToGithub(path, jsonObj){
+    const token = window.localStorage.getItem("githubKey");
+    const owner = GITHUB_OWNER;
+    const repo = GITHUB_REPO;
+    // const path = 'newfile.json';
+    const content = JSON.stringify(jsonObj, null, 4); 
+    const base64Content = btoa(decodeURIComponent(encodeURIComponent(content)));; 
+    
+    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+
+    fetch(apiUrl, {
+        headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/vnd.github+json"
+        }
+    })
+        .then(shaResponse=>shaResponse.json())
+        .then(shaData=>{
+            const sha = shaData.sha;
+            return fetch(apiUrl, {
+              method: "PUT",
+              headers: {
+                "Authorization": `Bearer ${token}`,
+                "Accept": "application/vnd.github+json"
+              },
+              body: JSON.stringify({
+                message: `Submitting file ${path}`,
+                content: base64Content,
+                sha
+              })
+            })
+        })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+    
 }
