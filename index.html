@@ -8,6 +8,33 @@
     <link href="styles.css" rel="stylesheet">
     <!-- <style>
     </style> -->
+    <script type="text/javascript">
+        // Инициализация Countly
+        var Countly = Countly || {};
+        Countly.q = Countly.q || [];
+      
+        // Укажите ваш APP_KEY
+        Countly.app_key = "405b0820ebe10cba91c3d146ce3e2194ab6182ea";
+      
+        // Укажите URL вашего сервера Countly
+        Countly.url = "https://terre-humaine.senchenko.top";
+      
+        // Настройка отслеживания
+        Countly.q.push(["track_sessions"]);
+        Countly.q.push(["track_pageview"]);
+      
+        // Асинхронная загрузка скрипта Countly
+        (function() {
+          var cly = document.createElement("script");
+          cly.type = "text/javascript";
+          cly.async = true;
+          cly.src = "https://cdn.jsdelivr.net/countly-sdk-web/latest/countly.min.js";
+          cly.onload = function(){Countly.init()};
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(cly, s);
+        })();
+      </script>
+      
 </head>
 <body class="bg-gray-50">
     <script src="main.js"></script>

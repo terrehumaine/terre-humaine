@@ -22,7 +22,7 @@ async function showOptions() {
 
     // Creating modal content
     const modalContent = document.createElement('div');
-    modalContent.className = 'bg-white p-8 rounded-lg shadow-lg max-w-md w-11/12';
+    modalContent.className = 'bg-white p-8 flex flex-col h-5/6 rounded-lg shadow-lg w-11/12 bg-indigo-100';
 
     // API Section
     const apiSection = document.createElement('div');
@@ -39,6 +39,7 @@ async function showOptions() {
 
     // Magazine Section (Table)
     const magazineSection = document.createElement('div');
+    magazineSection.className = 'flex-grow overflow-y-auto';
     const magazineTitle = document.createElement('h3');
     magazineTitle.textContent = 'Paramètres des numéros de magazine';
     magazineTitle.className = 'mb-4 font-bold text-lg';
@@ -48,7 +49,7 @@ async function showOptions() {
 
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
-    ['Numéro de magazine', 'Période', 'Statut'].forEach(text => {
+    ['Numéro', 'Période', 'Statut'].forEach(text => {
         const th = document.createElement('th');
         th.textContent = text;
         th.className = 'border-b p-2 text-left';
@@ -76,7 +77,7 @@ async function showOptions() {
         statusSelect.className = 'p-1 border border-gray-300 rounded';
         const draftOption = new Option('Brouillon', 'draft');
         const currentOption = new Option('Numéro actuel', 'current');
-        const archiveOption = new Option('Archive', 'archive');
+        const archiveOption = new Option('Archive', 'archive', false, !item.status || item.status == 'archive');
         statusSelect.add(draftOption);
         statusSelect.add(currentOption);
         statusSelect.add(archiveOption);
@@ -93,17 +94,38 @@ async function showOptions() {
     // Adding sections to modal content
     modalContent.append(apiSection, magazineSection);
 
+    // Close and Save buttons
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'flex items-center mt-4';
+
     // Close button
     const closeModal = document.createElement('button');
     closeModal.textContent = 'Fermer';
-    closeModal.className = 'mt-4 px-6 py-2 bg-red-500 text-white rounded cursor-pointer';
+    closeModal.className = 'mt-4 px-6 mx-4 py-2 bg-red-500 text-white rounded cursor-pointer';
 
     closeModal.addEventListener('click', () => {
         modal.classList.add('hidden');
     });
 
-    modalContent.appendChild(closeModal);
+    // Save btn
+    const saveButton = document.createElement('button');
+    saveButton.textContent = 'Enregistrer';
+    saveButton.className = 'mt-4 px-6 mx-4 py-2 bg-green-500 text-white rounded cursor-pointer';
+    saveButton.addEventListener('click', () => {
+        saveSettings();
+    });
+
+    buttonContainer.appendChild(closeModal);
+    buttonContainer.appendChild(saveButton);
+    modalContent.appendChild(buttonContainer);
+
+    // modalContent.appendChild(closeModal);
     modal.appendChild(modalContent);
 
     document.body.appendChild(modal);
+}
+
+function saveSettings() {
+    // Placeholder for saving logic
+    console.log('Save button clicked');
 }

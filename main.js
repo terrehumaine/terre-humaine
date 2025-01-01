@@ -424,7 +424,7 @@ function constructOptions() {
     // Script not loaded yet, load it
     const script = document.createElement('script');
     script.id = scriptId;
-    script.src = '/options.js';
+    script.src = '/options.js?t=' + Math.random();
     script.onload = function() {
         if (typeof showOptions === 'function') {
             showOptions();
