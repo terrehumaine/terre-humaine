@@ -139,7 +139,7 @@ function saveSettings() {
     window.localStorage.setItem("githubKey", githubKey);
     
     const archiveData = gatherTableData();
-    pushJsonToGithub('tmp_archive.json', archiveData);
+    pushJsonToGithub('archive.json', archiveData);
     console.log({archiveData});
 }
 
@@ -175,7 +175,7 @@ function pushJsonToGithub(path, jsonObj){
     const repo = GITHUB_REPO;
     // const path = 'newfile.json';
     const content = JSON.stringify(jsonObj, null, 4); 
-    const base64Content = btoa(decodeURIComponent(encodeURIComponent(content)));; 
+    const base64Content = btoa(decodeURIComponent(encodeURIComponent(content)));
     
     const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
 
