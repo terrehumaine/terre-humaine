@@ -80,8 +80,8 @@ async function showOptions() {
         const statusCell = document.createElement('td');
         const statusSelect = document.createElement('select');
         statusSelect.className = 'p-1 border border-gray-300 rounded';
-        const draftOption = new Option('Brouillon', 'draft');
-        const currentOption = new Option('Numéro actuel', 'current');
+        const draftOption = new Option('Brouillon', 'draft', false, item.status == 'draft');
+        const currentOption = new Option('Numéro actuel', 'current', false, item.status == 'current');
         const archiveOption = new Option('Archive', 'archive', false, !item.status || item.status == 'archive');
         statusSelect.add(draftOption);
         statusSelect.add(currentOption);
