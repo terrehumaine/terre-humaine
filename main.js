@@ -207,6 +207,15 @@ function fillArchiveList(data){
     // <li class="hover:text-blue-600"><a href="#">Février 2024 - n°340</a></li>
 }
 
+// function observeElementResize(element, callback){
+//     // call it anyway before event is arrived
+//     callback();
+//     const el = document.querySelector(element);
+//     window.addEventListener('resize', callback);
+//     const observer = new ResizeObserver(callback);
+//     observer.observe(el);
+// }
+
 
 const dataStore = {};
 
@@ -230,6 +239,205 @@ const getDataJob = (new Promise((resolve, refect)=>{
         dataStore.currentIssue = data;
     });
 
+function loadQuill() {
+    return new Promise((resolve, reject) => {
+        // Check if Quill is already loaded
+        if (window.Quill) {
+            resolve(window.Quill);
+            return;
+        }
+
+        // Load Quill CSS
+        const quillCssId = 'quill-css';
+        if (!document.getElementById(quillCssId)) {
+            const link = document.createElement('link');
+            link.id = quillCssId;
+            link.href = 'https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css';
+            link.rel = 'stylesheet';
+            document.head.appendChild(link);
+        }
+
+        // Load Quill JS
+        const quillJsId = 'quill-js';
+        if (!document.getElementById(quillJsId)) {
+            const script = document.createElement('script');
+            script.id = quillJsId;
+            script.src = 'https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js';
+            script.onload = checkQuillReady;
+            script.onerror = () => reject(new Error("Failed to load Quill script"));
+            document.head.appendChild(script);
+        } else {
+            checkQuillReady();
+        }
+
+        // Check if Quill object is ready
+        function checkQuillReady() {
+            const interval = setInterval(() => {
+                if (window.Quill) {
+                    clearInterval(interval);
+                    const icons = Quill.import('ui/icons');
+                    icons['bold'] = '<b>G</b>';
+                    icons['underline'] = '<u>U</u>';
+                    resolve(window.Quill);
+                }
+            }, 50); // check every 50ms
+        }
+    });
+}
+function issueEditorPreparation() {
+    const addButton = document.querySelector('.btn-add-issue');
+    const optionsButton = document.querySelector('.btn-options');
+    const modal = document.getElementById('article-modal');
+    const closeModalButton = document.getElementById('close-modal');
+    const submitIssueButton = document.querySelector('.submit-issue');
+    const addSecondaryButton = document.getElementById('add-secondary');
+    const secondaryContainer = document.getElementById('secondary-articles-container');
+    
+    addButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.classList.remove('hidden');
+        menuActiveToggle();
+    });
+
+    optionsButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        constructOptions();
+        menuActiveToggle();
+    });
+
+    closeModalButton.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+    submitIssueButton.addEventListener('click', () => {
+        const data = getFormData();
+        console.log(data);
+    });
+
+    addSecondaryButton.addEventListener('click', () => {
+        addSecondaryArticle();
+    });
+
+    const mainEditor = new Quill('#main-editor', {
+        modules: {
+            toolbar: [
+                // [{ header: [1, 2, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ 'script': 'sub'}, { 'script': 'super' }],
+                ['link'],
+            ],
+        },
+        placeholder: 'Votre texte principal ici',
+        theme: 'snow'
+    });
+
+    // function updateElementTopHeight(element, varName){
+    //     const height = element.offsetHeight;
+    // }
+    // const modalTitle = document.querySelector('.main-title-container');
+    // observeElementResize(modalTitle, callback);
+
+    function addSecondaryArticle() {
+        const secondaryArticle = document.createElement('div');
+        secondaryArticle.classList.add('secondary-article', 'mb-4');
+        
+        const titleInput = document.createElement('input');
+        titleInput.type = "text";
+        titleInput.placeholder = "Titre";
+        titleInput.classList.add('editor-secondary-title', 'w-full', 'border-2', 'border-gray-300', 'mb-2', 'p-2', 'rounded');
+
+        const authorInput = document.createElement('input');
+        authorInput.type = "text";
+        authorInput.placeholder = "Auteur";
+        authorInput.classList.add('editor-secondary-author', 'w-full', 'border-2', 'border-gray-300', 'mb-2', 'p-2', 'rounded');
+
+        const editorContainer = document.createElement('div');
+        editorContainer.classList.add('secondary-editor-container');
+
+        const editorDiv = document.createElement('div');
+        editorDiv.classList.add('secondary-editor', 'h-32');
+        editorContainer.appendChild(editorDiv);
+
+        secondaryArticle.append(titleInput, editorContainer, authorInput);
+        secondaryContainer.appendChild(secondaryArticle);
+
+        new Quill(editorDiv, {
+            modules: {
+                toolbar: [
+                    // [{ header: [1, 2, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'script': 'sub'}, { 'script': 'super' }],
+                    ['link'],
+                ],
+            },
+            placeholder: 'Votre texte ici',
+            theme: 'snow'
+        });
+    }
+    function getFormData() {
+        // Assume you have textarea and editor for main article and secondary articles
+        const mainTitle = document.getElementById('main-title').value;
+        const mainContent = document.querySelector('#main-editor .ql-editor').innerHTML;
+        const mainAuthor = document.querySelector('#main-author').value;
+        
+        const secondaryArticles = [];
+        const secondaryArticleElements = document.querySelectorAll('.secondary-article');
+        secondaryArticleElements.forEach((articleElement) => {
+            const title = articleElement.querySelector('.editor-secondary-title').value;
+            const content = articleElement.querySelector('.secondary-editor .ql-editor').innerHTML;
+            const author = articleElement.querySelector('.editor-secondary-author').value;
+            secondaryArticles.push({
+                title: title,
+                html: content,
+                author: author
+            });
+        });
+    
+        // Create the final object structure
+        const articleData = {
+            article: {
+                title: mainTitle,
+                html: mainContent,
+                author: mainAuthor,
+                postScriptums: []
+            },
+            articlesMineurs: secondaryArticles
+        };
+    
+        return articleData;
+    }
+}
+/* ======== Options ========= */
+function constructOptions() {
+    const scriptId = 'options-js';
+
+    // Check if the script is already loaded
+    if (document.getElementById(scriptId)) {
+        // Assume there's a function in /options.js called `showOptions` to display the settings window
+        if (typeof showOptions === 'function') {
+            showOptions();
+        } else {
+            console.error('Function showOptions is not defined.');
+        }
+        return;
+    }
+
+    // Script not loaded yet, load it
+    const script = document.createElement('script');
+    script.id = scriptId;
+    script.src = '/options.js';
+    script.onload = function() {
+        if (typeof showOptions === 'function') {
+            showOptions();
+        } else {
+            console.error('Function showOptions is not defined.');
+        }
+    };
+    script.onerror = function() {
+        console.error('Failed to load /options.js');
+    };
+
+    document.head.appendChild(script);
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('main.js: DOMContentLoaded');
@@ -243,5 +451,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     fetchJson('archive.json')
         .then(fillArchiveList);
+
+    loadQuill() 
+        .then(issueEditorPreparation);
 
 });

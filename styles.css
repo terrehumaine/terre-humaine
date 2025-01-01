@@ -106,3 +106,27 @@
     clear: both;
     display: table;
 }
+
+/* Ajouter Issue */
+.inset-0 {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.bg-opacity-50 {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.add-issue-dialog {
+    height: calc(98% - 1 * var(--stickyhead-height));;
+    top: calc(var(--stickyhead-height) / 2);
+    margin: 1%;
+    background-color: ghostwhite;
+    position: relative;
+}
+
+#main-editor .ql-editor, .secondary-editor .ql-editor {
+    min-height: 6rem;
+}
