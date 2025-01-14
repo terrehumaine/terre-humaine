@@ -9,21 +9,16 @@
     <!-- <style>
     </style> -->
     <script type="text/javascript">
-        // Инициализация Countly
         var Countly = Countly || {};
         Countly.q = Countly.q || [];
-      
-        // Укажите ваш APP_KEY
+
         Countly.app_key = "405b0820ebe10cba91c3d146ce3e2194ab6182ea";
       
-        // Укажите URL вашего сервера Countly
         Countly.url = "https://sen-fa0fc983c53b3.flex.countly.com/";
       
-        // Настройка отслеживания
         Countly.q.push(["track_sessions"]);
         Countly.q.push(["track_pageview"]);
       
-        // Асинхронная загрузка скрипта Countly
         (function() {
           var cly = document.createElement("script");
           cly.type = "text/javascript";
