@@ -90,3 +90,6 @@ pnpm-lock.yaml
 
 # Optional: Original documents (uncomment if you want to exclude them)
 # /original/
+
+# Temporary files 
+# archive/.~lock.*
