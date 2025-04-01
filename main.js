@@ -1,5 +1,5 @@
-const GITHUB_OWNER = 'sen77',
-    GITHUB_REPO = 'sen77.github.io';
+const GITHUB_OWNER = 'terrehumaine',
+    GITHUB_REPO = 'terre-humaine';
 
 async function fetchJson(url, options = {}) {
     try {

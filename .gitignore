@@ -88,8 +88,7 @@ pnpm-lock.yaml
 *.min.js
 *.min.css
 
-# Optional: Original documents (uncomment if you want to exclude them)
-# /original/
+# Optional: Original documents
 
-# Temporary files 
+# Temporary files  
 archive/.~lock.*
