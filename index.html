@@ -12,21 +12,25 @@
         var Countly = Countly || {};
         Countly.q = Countly.q || [];
 
-        Countly.app_key = "9ad04637010c59d7a690a771dd8a98b417c3243a";
-      
-        Countly.url = "https://sen-c7214463d28cd.flex.countly.com/";
-      
+        // Добавляем команды в очередь
         Countly.q.push(["track_sessions"]);
         Countly.q.push(["track_pageview"]);
-      
+
         (function() {
-          var cly = document.createElement("script");
-          cly.type = "text/javascript";
-          cly.async = true;
-          cly.src = "https://cdn.jsdelivr.net/countly-sdk-web/latest/countly.min.js";
-          cly.onload = function(){Countly.init()};
-          var s = document.getElementsByTagName("script")[0];
-          s.parentNode.insertBefore(cly, s);
+        var cly = document.createElement("script");
+        cly.type = "text/javascript";
+        cly.async = true;
+        cly.src = "https://cdn.jsdelivr.net/npm/countly-sdk-web@latest/lib/countly.min.js"; // Последняя версия
+        cly.onload = function() {
+            // Передаём параметры явно в init
+            Countly.init({
+            app_key: "9ad04637010c59d7a690a771dd8a98b417c3243a",
+            url: "https://sen-c7214463d28cd.flex.countly.com/",
+            debug: true // Включаем отладку для проверки
+            });
+        };
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(cly, s);
         })();
       </script>
       
