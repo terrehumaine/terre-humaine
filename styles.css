@@ -126,7 +126,10 @@
     background-color: ghostwhite;
     position: relative;
 }
-
+.main-title-container {
+    z-index: 111;
+}
 #main-editor .ql-editor, .secondary-editor .ql-editor {
     min-height: 6rem;
 }
+

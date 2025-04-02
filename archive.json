@@ -1,9 +1,21 @@
 [
     {
+        "period": "2025-03",
+        "issueNumber": 353,
+        "status": "current",
+        "file": "Terre Humaine - 2025-03.docx"
+    },
+    {
+        "period": "2025-02",
+        "issueNumber": 352,
+        "status": "archive",
+        "file": "Terre Humaine - 2025-02.docx"
+    },
+    {
         "period": "2025-01",
         "issueNumber": 351,
-        "status": "current",
-        "file": "Terre Humaine - janvier 2025.docx"
+        "status": "archive",
+        "file": "Terre Humaine - 2025-01.docx"
     },
     {
         "period": "2024-12",

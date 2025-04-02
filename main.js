@@ -299,6 +299,7 @@ function issueEditorPreparation() {
     addButton.addEventListener('click', (e) => {
         e.preventDefault();
         modal.classList.remove('hidden');
+        populatePeriodSelector();
         menuActiveToggle();
     });
 
@@ -314,6 +315,22 @@ function issueEditorPreparation() {
     submitIssueButton.addEventListener('click', () => {
         const data = getFormData();
         console.log(data);
+        // Decide whether it is existing or new issue
+        const formPeriod = data.period;
+        fetchJson(`archive.json`)
+            .then(archiveData => {
+                const existingPeriod = archiveData.find(d => d.period === formPeriod);
+                console.log(existingPeriod);
+                const status = existingPeriod.status
+                if (existingPeriod) {
+                    // Update existing issue
+                    
+                } else {
+                    // Create new issue
+                    
+                }
+            })
+            .catch(error => console.error('Error updating issue:', error));
     });
 
     addSecondaryButton.addEventListener('click', () => {
@@ -377,6 +394,7 @@ function issueEditorPreparation() {
         });
     }
     function getFormData() {
+        const period = document.getElementById('period-selector').value;
         // Assume you have textarea and editor for main article and secondary articles
         const mainTitle = document.getElementById('main-title').value;
         const mainContent = document.querySelector('#main-editor .ql-editor').innerHTML;
@@ -397,6 +415,7 @@ function issueEditorPreparation() {
     
         // Create the final object structure
         const articleData = {
+            period,
             article: {
                 title: mainTitle,
                 html: mainContent,
@@ -440,6 +459,98 @@ function constructOptions() {
     };
 
     document.head.appendChild(script);
+}
+
+function populatePeriodSelector() {
+    fetchJson('archive.json')
+        .then(data => {
+            const periodSelector = document.getElementById('period-selector');
+            
+            // Clear the dropdown list
+            while (periodSelector.firstChild) {
+                periodSelector.removeChild(periodSelector.firstChild);
+            }
+            // Populate the dropdown with existing periods
+            const periods = data.map(d => d.period);
+
+            // Determine the next period
+            const lastPeriod = periods[0];
+            const [lastYear, lastMonth] = lastPeriod.split('-').map(Number);
+            const nextMonth = lastMonth === 12 ? 1 : lastMonth + 1;
+            const nextYear = lastMonth === 12 ? lastYear + 1 : lastYear;
+            const nextPeriod = `${nextYear}-${String(nextMonth).padStart(2, '0')}`;
+
+            // Populate the dropdown with the next period at the beginning
+            [nextPeriod, ...periods].forEach(period => {
+                const option = document.createElement('option');
+                option.value = period;
+                option.textContent = period2Long(period);
+                periodSelector.appendChild(option);
+            });
+
+            // Add event listener to load issue data on selection
+            periodSelector.addEventListener('change', (event) => {
+                const selectedPeriod = event.target.value;
+                // fetchJson(`articles/${selectedPeriod}/issue.json`)
+                getIssueData(selectedPeriod)
+                    .then(issueData => {
+                        fillFormWithIssueData(issueData);
+                    })
+                    .catch(error => console.error('Error loading issue data:', error));
+            });
+        })
+        .catch(error => console.error('Error populating period selector:', error));
+}
+
+function fillFormWithIssueData(issueData) {
+    // Fill the main article fields
+    document.getElementById('main-title').value = issueData.article.title || '';
+    document.querySelector('#main-editor .ql-editor').innerHTML = issueData.article.html || '';
+    document.getElementById('main-author').value = issueData.article.author || '';
+
+    // Clear and populate secondary articles
+    const secondaryContainer = document.getElementById('secondary-articles-container');
+    secondaryContainer.innerHTML = '';
+    issueData.articlesMineurs.forEach(article => {
+        const secondaryArticle = document.createElement('div');
+        secondaryArticle.classList.add('secondary-article', 'mb-4');
+        
+        const titleInput = document.createElement('input');
+        titleInput.type = "text";
+        titleInput.placeholder = "Titre";
+        titleInput.classList.add('editor-secondary-title', 'w-full', 'border-2', 'border-gray-300', 'mb-2', 'p-2', 'rounded');
+        titleInput.value = article.title || '';
+
+        const authorInput = document.createElement('input');
+        authorInput.type = "text";
+        authorInput.placeholder = "Auteur";
+        authorInput.classList.add('editor-secondary-author', 'w-full', 'border-2', 'border-gray-300', 'mb-2', 'p-2', 'rounded');
+        authorInput.value = article.author || '';
+
+        const editorContainer = document.createElement('div');
+        editorContainer.classList.add('secondary-editor-container');
+
+        const editorDiv = document.createElement('div');
+        editorDiv.classList.add('secondary-editor', 'h-32');
+        editorContainer.appendChild(editorDiv);
+
+        secondaryArticle.append(titleInput, editorContainer, authorInput);
+        secondaryContainer.appendChild(secondaryArticle);
+
+        const quill = new Quill(editorDiv, {
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'script': 'sub'}, { 'script': 'super' }],
+                    ['link'],
+                ],
+            },
+            placeholder: 'Votre texte ici',
+            theme: 'snow'
+        });
+
+        quill.root.innerHTML = article.html || '';
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
