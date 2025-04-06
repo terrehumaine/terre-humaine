@@ -133,3 +133,30 @@
     min-height: 6rem;
 }
 
+
+.turning-ring {
+    position: relative; 
+    padding-left: 2em; 
+}
+.turning-ring::before {
+    content: "⥁"; 
+    position: absolute; 
+    left: 0; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    font-size: 1.5em; 
+    animation: spin 2s linear infinite; 
+}
+@keyframes spin {
+    from {
+        transform: translateY(-50%) rotate(0deg); /* Начальная точка */
+    }
+    to {
+        transform: translateY(-50%) rotate(360deg); /* Полный оборот */
+    }
+}
+
+/*======== ql-editor ============*/
+.ql-editor p {
+    margin-bottom: 1em!important;
+}

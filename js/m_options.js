@@ -1,3 +1,7 @@
+import { dataStore } from '/js/m_data_store.js';
+
+const { pushFilesToGitHub } = await import(`/js/m_github_api.js?t=${new Date().getTime()}`);
+
 async function showOptions() {
     const existingModal = document.getElementById('options-modal');
     if (existingModal) {
@@ -35,7 +39,7 @@ async function showOptions() {
     apiInput.placeholder = 'Entrez la clé API';
     apiInput.className = 'github-key-input w-full p-2 mb-4 border border-gray-300 rounded';
 
-    const githubKey = window.localStorage.getItem("githubKey");
+    const githubKey = dataStore.githubKey; 
     if(githubKey){
         apiInput.value = githubKey;
     }
@@ -133,13 +137,20 @@ async function showOptions() {
     document.body.appendChild(modal);
 }
 
-function saveSettings() {
-    githubKeyInput = document.querySelector('.github-key-input');
+async function saveSettings() {
+    // const { pushFilesToGitHub } = await require(`/js/m_github_api.js?t=${new Date().getTime()}`);
+    const githubKeyInput = document.querySelector('.github-key-input');
     const githubKey = githubKeyInput.value;
-    window.localStorage.setItem("githubKey", githubKey);
+    dataStore.githubKey = githubKey; // Update the dataStore
     
     const archiveData = gatherTableData();
-    pushJsonToGithub('archive.json', archiveData);
+    // pushJsonToGithub('archive.json', archiveData);
+    const path = 'archive.json';
+    const content = JSON.stringify(archiveData, null, 4);
+    const type = 'application/json';
+    const files = [{ path, content, type }];
+    const commitMessage = 'Submitting archive.json';
+    pushFilesToGitHub({ files, commitMessage });
     console.log({archiveData});
 }
 
@@ -169,7 +180,7 @@ function gatherTableData() {
     return tableData;
 }
 
-function pushJsonToGithub(path, jsonObj){
+function __pushJsonToGithub(path, jsonObj){
     const token = window.localStorage.getItem("githubKey");
     const owner = GITHUB_OWNER;
     const repo = GITHUB_REPO;
@@ -206,3 +217,5 @@ function pushJsonToGithub(path, jsonObj){
     .catch(error => console.error(error));
     
 }
+
+export { showOptions };

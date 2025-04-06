@@ -36,7 +36,7 @@
       
 </head>
 <body class="bg-gray-50">
-    <script src="main.js"></script>
+    <script type="module" src="/js/main.js"></script>
     <div class="logo-title flex items-center justify-between mx-auto px-4 py-2">
         <div class="flex items-center">
             <a href="/"><img src="/img/logo.png" alt="Logo" class="h-16 md:h-20"></a>
@@ -148,7 +148,7 @@
         </div>
     </footer>
 
-    <script>
+    <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
     
             const handleScroll = () => {
@@ -166,19 +166,9 @@
             };
             window.addEventListener('scroll', handleScroll);
 
-            const menuToggle = document.getElementById('menu-toggle');
-            // const mobileMenu = document.getElementById('mobile-menu');
-
-            menuToggle.addEventListener('click', () => {
-                // mobileMenu.classList.toggle('active');
-                menuActiveToggle();
-            });            
         });
+        
 
-        function menuActiveToggle(){
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('active');
-        }
 
         const stickyHead = document.querySelector('.logo-title');
         const subHead = document.querySelector('.header-wrapper');
@@ -211,20 +201,27 @@
                         </select>
                     </div>
                 </h2>
-                <div class="main-title-container mb-2 sticky" style="top: 0; background-color:ghostwhite;">
-                    <label for="main-title" class="block mb-2">Titre principal</label>
-                    <textarea id="main-title" class="w-full border-2 border-gray-300 rounded h-auto resize-y focus:outline-none p-2" rows="1"></textarea>
-                </div>
-                <div class="mb-2">
-                    <label class="block mb-2">Contenu principal</label>
-                    <div id="main-editor-container">
-                        <div id="main-editor" class="h-40"></div>
+                
+                <div class="form-main-article border border-gray-300 rounded p-4 mb-4">
+                    <div class="main-title-container mb-2 sticky" style="top: 0; background-color:ghostwhite;">
+                        <label for="main-title" class="block mb-2">Titre principal</label>
+                        <textarea id="main-title" class="w-full border-2 border-gray-300 rounded h-auto resize-y focus:outline-none p-2" rows="1"></textarea>
                     </div>
-                </div>
-                <div class="mb-2">
-                    <label for="main-author" class="block mb-2">Auteur</label>
-                    <input type="text" id="main-author" class="w-full border-2 border-gray-300 rounded p-2 mb-4">
-                </div>                
+                    <div class="main-image-container mb-2 flex flex-col md:flex-row md:items-center">
+                        <img src="/img/empty-pic.jpg" id="form-main-image" alt="Image principale" class="block mb-2 md:mb-0 w-4/5 md:w-1/5 h-auto rounded mx-auto md:mx-0">
+                        <input type="file" id="form-main-image-input" class="w-full md:w-auto border-2 border-gray-300 rounded p-2 md:ml-4">
+                    </div>
+                    <div class="mb-2">
+                        <label class="block mb-2">Contenu principal</label>
+                        <div id="main-editor-container">
+                            <div id="main-editor" class="h-40"></div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label for="main-author" class="block mb-2">Auteur</label>
+                        <input type="text" id="main-author" class="w-full border-2 border-gray-300 rounded p-2 mb-4">
+                    </div>  
+                </div>              
                 <div id="secondary-articles-container" class="mb-4">
                     <h3 class="text-xl font-bold mt-6 mb-4">Articles Secondaires</h3>
                     <!-- <div class="secondary-article"></div> -->
