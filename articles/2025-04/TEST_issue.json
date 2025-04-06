@@ -1,0 +1,21 @@
+{
+    "period": "2025-04",
+    "article": {
+        "title": "ppppppppppppp",
+        "html": "<p>ppppp</p><p>pppp</p><p>ppp</p><p>pp</p>",
+        "author": "ppppppp",
+        "postScriptums": []
+    },
+    "articlesMineurs": [
+        {
+            "title": "sssssss",
+            "html": "<p>sssss</p><p>sss</p><p>sss</p><p><br></p>",
+            "author": "ssss"
+        },
+        {
+            "title": "dddd",
+            "html": "<p>dddd</p><p>d</p><p>d</p>",
+            "author": "dddd"
+        }
+    ]
+}
