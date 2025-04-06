@@ -24,10 +24,14 @@ export async function pushFilesToGitHub({
 
             // Если content — строка или объект, преобразуем в зависимости от типа
             let contentData;
-            if (typeof item.content === 'string' || item.content instanceof ArrayBuffer || item.content instanceof Blob) {
+            if (typeof item.content === 'string') {
                 contentData = item.content;
+            } else if (item.content instanceof ArrayBuffer || item.content instanceof Blob) {
+                contentData = item.content;
+            } else if (item.content instanceof Uint8Array) {
+                contentData = item.content.buffer;
             } else {
-                contentData = JSON.stringify(item.content); // Для JSON-объектов
+                contentData = JSON.stringify(item.content, null, 4); // Для JSON-объектов
             }
 
             const blob = new Blob([contentData], { type: mimeType });
