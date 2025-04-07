@@ -1,24 +1,22 @@
-import { issue2Page } from "/js/m_page_manipulation.js";
-
 const dataStore = new Proxy({ currentIssue: {} }, {
     set(target, key, value) {
         switch (key) {
-            case 'currentIssue':
-                issue2Page(value);
-                break;
+            // case 'currentIssue':
+            //     issue2Page(value);
+            //     break;
             case 'githubKey':
                 window.localStorage.setItem("githubKey", value);
                 break;
             default:
                 break;
         }
+        console.log({ target, key, value });
         if(target[`${key}_handler`]){
             const handler = target[`${key}_handler`];
             handler(value);
         }
 
         target[key] = value;
-        console.log({ target, key, value });
         return true;
     },
     get(target, key) {

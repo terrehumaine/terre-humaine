@@ -1,4 +1,4 @@
-import { dataStore } from "/js/m_data_store.js";
+const {dataStore} = await import(`/js/m_data_store.js?t=${new Date().getTime()}`);
 
 const GITHUB_OWNER = 'terrehumaine',
     GITHUB_REPO = 'terre-humaine',

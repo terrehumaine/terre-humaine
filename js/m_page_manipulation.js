@@ -1,4 +1,4 @@
-import { period2Long } from "./m_utilites.js";
+const { period2Long } = await import(`/js/m_utilites.js?t=${new Date().getTime()}`);
 
 export function issue2Page(data){
     const issuePeriod = document.querySelector('.issue-period');

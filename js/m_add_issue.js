@@ -1,5 +1,7 @@
-import { pushFilesToGitHub } from '/js/m_github_api.js';
-import { fetchJson, period2Long, getIssueData, menuActiveToggle, removeAllChildren } from '/js/m_utilites.js';
+const  { fetchJson, period2Long, getIssueData, 
+    menuActiveToggle, removeAllChildren 
+} = await import(`/js/m_utilites.js?t=${new Date().getTime()}`);
+const { pushFilesToGitHub } = await import(`/js/m_github_api.js?t=${new Date().getTime()}`);
 
 
 const dialogWindow = document.getElementById('article-modal');
@@ -108,7 +110,7 @@ function issueEditorPreparation() {
         // Prepare img1.jpg
         const mainImageBase64 = formData.article?.imageBase64;
         if(mainImageBase64) {
-            const mainImagePath = `articles/${formPeriod}/TEST_img1.jpg`;
+            const mainImagePath = `articles/${formPeriod}/img1.jpg`;
             const mainImageType = 'image/jpeg';
             const mainImageFile = {
                 path: mainImagePath,
@@ -120,7 +122,7 @@ function issueEditorPreparation() {
         }
 
         // Prepare issue.json
-        const issueJsonPath = `articles/${formPeriod}/TEST_issue.json`;
+        const issueJsonPath = `articles/${formPeriod}/issue.json`;
         const issueJsonContent = JSON.stringify(formData, null, 4);
         const issueJsonType = 'application/json';
         const issueJsonFile = { 
@@ -140,7 +142,7 @@ function issueEditorPreparation() {
         console.log(existingPeriod);
         // const status = existingPeriod.status
         if (!existingPeriod) {
-            const archiveJsonPath = 'TEST_archive.json';
+            const archiveJsonPath = 'archive.json';
             const newIssue = {
                 period: formPeriod,
                 issueNumber: lastIssue.issueNumber + 1,

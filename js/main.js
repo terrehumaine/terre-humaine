@@ -1,5 +1,12 @@
-import { fetchJson, getUrlParam, getIssueData, period2Long, menuActiveToggle } from '/js/m_utilites.js';
-import dataStore from '/js/m_data_store.js';
+// import { fetchJson, getUrlParam, getIssueData, period2Long, menuActiveToggle } from '/js/m_utilites.js';
+const { 
+    fetchJson, getUrlParam, getIssueData, period2Long, 
+    menuActiveToggle, removeAllChildren
+} = await import(`/js/m_utilites.js?t=${new Date().getTime()}`);
+// import dataStore from '/js/m_data_store.js';
+const { dataStore } = await import(`/js/m_data_store.js?t=${new Date().getTime()}`);
+// import { issue2Page } from "/js/m_page_manipulation.js";
+const { issue2Page } = await import(`/js/m_page_manipulation.js?t=${new Date().getTime()}`);
 
   
 
@@ -7,9 +14,8 @@ import dataStore from '/js/m_data_store.js';
 function fillArchiveList(data){
     const archiveContainer = document.querySelector('.th-archives');
     // Clear the list
-    while (archiveContainer.firstChild) {
-        archiveContainer.removeChild(archiveContainer.firstChild);
-    }
+    removeAllChildren(archiveContainer);
+
     data.forEach(d=>{
         const li = document.createElement("li");
         li.className = 'h_over:';
@@ -20,32 +26,34 @@ function fillArchiveList(data){
             (<a href="/archive/${d.file}" target="_blank" class="underline text-blue-600">télécharger</a>)`;
         archiveContainer.append(li);
     })
-    // <li class="hover:text-blue-600"><a href="#">Février 2024 - n°340</a></li>
 }
 
-// function observeElementResize(element, callback){
-//     // call it anyway before event is arrived
-//     callback();
-//     const el = document.querySelector(element);
-//     window.addEventListener('resize', callback);
-//     const observer = new ResizeObserver(callback);
-//     observer.observe(el);
-// }
+function getCurrentIssue(archiveData, certainPeriod){
+    function findCondition(d){
+        if(certainPeriod){
+            return d.period === certainPeriod;
+        }
+        return d.status === "current";
+    }
+    return archiveData.find(findCondition);
+}
+
 
 const getDataJob = (new Promise((resolve, refect)=>{
-    const urlPeriod = getUrlParam('period');
-    if(urlPeriod){
-        resolve(urlPeriod);
-        return ;
-    }
+    const certainPeriod = getUrlParam('period');
+    // if(urlPeriod){
+    //     resolve(urlPeriod);
+    //     return ;
+    // }
     
     // TODO: receive current issue from archive.json
     // receiving last issue
-    fetchJson('current.json')
-        .then(data=>{
-            dataStore.currentNumber = data.numero;
-            dataStore.currentFolder = data.period;
-            resolve(data.period);
+    fetchJson(`/archive.json?t=${new Date().getTime()}`)
+        .then(archiveData=>{
+            const currentData = getCurrentIssue(archiveData, certainPeriod);
+            dataStore.currentNumber = currentData.issueNumber;
+            dataStore.currentFolder = currentData.period;
+            resolve(currentData.period);
         });
 }))
     .then(getIssueData)
@@ -53,14 +61,10 @@ const getDataJob = (new Promise((resolve, refect)=>{
         dataStore.currentIssue = data;
     });
 
+// dataStore setup
+dataStore.currentIssue_handler = issue2Page;
 
-/* ======== Options ========= */
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
+function onDOMContentLoaded() {
     console.log('main.js: DOMContentLoaded');
 
     const menuToggle = document.getElementById('menu-toggle');
@@ -69,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });      
     
     /* Main Menu logic */
-    // adds/edits an issue 
     const addButton = document.querySelector('.btn-add-issue');
     addButton.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -77,21 +80,18 @@ document.addEventListener('DOMContentLoaded', function() {
         showAddIssueDialog();
     });
 
-    
     const optionsButton = document.querySelector('.btn-options');
     optionsButton.addEventListener('click', async (e) => {
         e.preventDefault();
         const { showOptions } = await import(`/js/m_options.js?t=${Math.random()}`);
-        // constructOptions();
         showOptions();
         menuActiveToggle();
     });
 
     getDataJob
-        .then(()=>{
+        .then(() => {
             const data = dataStore.currentIssue;
             // issue2Page(data);
-
         });
 
     fetchJson('archive.json')
@@ -99,5 +99,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // loadQuill() 
     //     .then(issueEditorPreparation);
+}
 
-});
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', onDOMContentLoaded);
+} else {
+    onDOMContentLoaded();
+}

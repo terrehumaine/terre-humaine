@@ -1,4 +1,4 @@
-import { dataStore } from '/js/m_data_store.js';
+const { dataStore } = await import(`/js/m_data_store.js?t=${new Date().getTime()}`);
 
 const { pushFilesToGitHub } = await import(`/js/m_github_api.js?t=${new Date().getTime()}`);
 
@@ -12,7 +12,7 @@ async function showOptions() {
     // Fetch the archive data
     let archiveData;
     try {
-        const response = await fetch('archive.json');
+        const response = await fetch(`archive.json?t=${new Date().getTime()}`);
         archiveData = await response.json();
     } catch (error) {
         console.error('Failed to fetch the archive data:', error);
