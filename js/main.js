@@ -29,33 +29,19 @@ function fillArchiveList(data){
 }
 
 function getCurrentIssue(archiveData, certainPeriod){
-    function findCondition(d){
-        if(certainPeriod){
-            return d.period === certainPeriod;
-        }
-        return d.status === "current";
-    }
-    return archiveData.find(findCondition);
+    return archiveData.find(d => d.status === "current");
 }
 
-
-const getDataJob = (new Promise((resolve, refect)=>{
-    const certainPeriod = getUrlParam('period');
-    // if(urlPeriod){
-    //     resolve(urlPeriod);
-    //     return ;
-    // }
-    
-    // TODO: receive current issue from archive.json
-    // receiving last issue
-    fetchJson(`/archive.json?t=${new Date().getTime()}`)
-        .then(archiveData=>{
-            const currentData = getCurrentIssue(archiveData, certainPeriod);
-            dataStore.currentNumber = currentData.issueNumber;
-            dataStore.currentFolder = currentData.period;
-            resolve(currentData.period);
-        });
-}))
+const getDataJob = fetchJson(`/archive.json?t=${new Date().getTime()}`)
+    .then(archiveData=>{
+        fillArchiveList(archiveData);
+        const certainPeriod = getUrlParam('period');
+        if(certainPeriod){
+            return certainPeriod;
+        }
+        const currentData = getCurrentIssue(archiveData, certainPeriod);
+        return currentData.period;
+    })
     .then(getIssueData)
     .then(data=>{
         dataStore.currentIssue = data;
@@ -88,17 +74,11 @@ function onDOMContentLoaded() {
         menuActiveToggle();
     });
 
+    // get the current issue data
     getDataJob
         .then(() => {
             const data = dataStore.currentIssue;
-            // issue2Page(data);
         });
-
-    fetchJson('archive.json')
-        .then(fillArchiveList);
-
-    // loadQuill() 
-    //     .then(issueEditorPreparation);
 }
 
 if (document.readyState === 'loading') {

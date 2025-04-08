@@ -3,6 +3,7 @@ const { period2Long } = await import(`/js/m_utilites.js?t=${new Date().getTime()
 export function issue2Page(data){
     const issuePeriod = document.querySelector('.issue-period');
     issuePeriod.innerText = period2Long(data.period);
+    issuePeriod.classList.remove('turning-ring');
     const issueNumber = document.querySelector('.issue-number');
     issueNumber.innerText = data.issueNumber;
     
