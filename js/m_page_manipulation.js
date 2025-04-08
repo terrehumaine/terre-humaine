@@ -3,7 +3,6 @@ const { period2Long } = await import(`/js/m_utilites.js?t=${new Date().getTime()
 export function issue2Page(data){
     const issuePeriod = document.querySelector('.issue-period');
     issuePeriod.innerText = period2Long(data.period);
-    issuePeriod.classList.remove('turning-ring');
     const issueNumber = document.querySelector('.issue-number');
     issueNumber.innerText = data.issueNumber;
     
@@ -12,25 +11,29 @@ export function issue2Page(data){
     
     const mainArticleTitle = document.querySelector('.article-title');
     mainArticleTitle.innerText  = data.article.title;
-
+    
     const mainArticle = document.querySelector('.article-main-text');
     mainArticle.innerHTML = data.article.html;
     const mainArticleAuthor = document.querySelector('.article-author');
     mainArticleAuthor.innerText = data.article.author;
     const mainArticlePostscriptums = document.querySelector('.article-postscriptums');
-    mainArticlePostscriptums.innerHTML = '';
+    removeAllChildren(mainArticlePostscriptums);
     data.article.postScriptums.forEach((d, i)=>{
         const ps = document.createElement("p");
         ps.className = "text-sm text-gray-700";
         ps.innerHTML = `<b>${'P'.repeat(i+1)}.S.</b> ${d}`;
         mainArticlePostscriptums.append(ps);
     });
-
+    
     
     const secondaryArticlesContainer = document.querySelector('.secondary-articles');
-    secondaryArticlesContainer.innerHTML = '';
+    removeAllChildren(secondaryArticlesContainer);
     const secondaryArticles = data.articlesMineurs.map(createSecondaryArticle);
     secondaryArticlesContainer.append(...secondaryArticles);
+    
+    
+    issuePeriod.classList.remove('turning-ring');
+    mainArticle.classList.remove('turning-ring');
 }
 
 function createSecondaryArticle(data) {
@@ -154,4 +157,10 @@ function createSecondaryArticle(data) {
 
     article.append(title, body, author);
     return article;
+}
+
+export function removeAllChildren(element) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
 }

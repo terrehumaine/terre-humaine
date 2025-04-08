@@ -1,7 +1,8 @@
 const  { fetchJson, period2Long, getIssueData, 
-    menuActiveToggle, removeAllChildren 
+    menuActiveToggle 
 } = await import(`/js/m_utilites.js?t=${new Date().getTime()}`);
 const { pushFilesToGitHub } = await import(`/js/m_github_api.js?t=${new Date().getTime()}`);
+const { removeAllChildren } = await import(`/js/m_page_manipulation.js?t=${new Date().getTime()}`);
 
 
 const dialogWindow = document.getElementById('article-modal');

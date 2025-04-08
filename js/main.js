@@ -1,12 +1,12 @@
 // import { fetchJson, getUrlParam, getIssueData, period2Long, menuActiveToggle } from '/js/m_utilites.js';
 const { 
     fetchJson, getUrlParam, getIssueData, period2Long, 
-    menuActiveToggle, removeAllChildren
+    menuActiveToggle
 } = await import(`/js/m_utilites.js?t=${new Date().getTime()}`);
 // import dataStore from '/js/m_data_store.js';
 const { dataStore } = await import(`/js/m_data_store.js?t=${new Date().getTime()}`);
 // import { issue2Page } from "/js/m_page_manipulation.js";
-const { issue2Page } = await import(`/js/m_page_manipulation.js?t=${new Date().getTime()}`);
+const { issue2Page, removeAllChildren } = await import(`/js/m_page_manipulation.js?t=${new Date().getTime()}`);
 
   
 

@@ -40,8 +40,3 @@ export function period2Long(period){
     return `${months[mm*1]} ${yyyy}`;
 }
 
-export function removeAllChildren(element) {
-    while (element.firstChild) {
-        element.removeChild(element.firstChild);
-    }
-}
