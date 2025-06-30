@@ -2,12 +2,12 @@
     {
         "period": "2025-04",
         "issueNumber": 354,
-        "status": "draft"
+        "status": "current"
     },
     {
         "period": "2025-03",
         "issueNumber": 353,
-        "status": "current",
+        "status": "archive",
         "file": "Terre Humaine - 2025-03.docx"
     },
     {
