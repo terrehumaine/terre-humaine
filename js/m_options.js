@@ -1,6 +1,6 @@
-const { dataStore } = await import(`/js/m_data_store.js?t=${new Date().getTime()}`);
+const { dataStore } = await import(`/js/m_data_store.js?t=${window.TH_TOKEN}`);
 
-const { pushFilesToGitHub } = await import(`/js/m_github_api.js?t=${new Date().getTime()}`);
+const { pushFilesToGitHub } = await import(`/js/m_github_api.js?t=${window.TH_TOKEN}`);
 
 async function showOptions() {
     const existingModal = document.getElementById('options-modal');
@@ -12,7 +12,7 @@ async function showOptions() {
     // Fetch the archive data
     let archiveData;
     try {
-        const response = await fetch(`archive.json?t=${new Date().getTime()}`);
+        const response = await fetch(`/archive.json?t=${window.TH_TOKEN}`);
         archiveData = await response.json();
     } catch (error) {
         console.error('Failed to fetch the archive data:', error);
@@ -138,7 +138,7 @@ async function showOptions() {
 }
 
 async function saveSettings() {
-    // const { pushFilesToGitHub } = await require(`/js/m_github_api.js?t=${new Date().getTime()}`);
+    // const { pushFilesToGitHub } = await require(`/js/m_github_api.js?t=${window.TH_TOKEN}`);
     const githubKeyInput = document.querySelector('.github-key-input');
     const githubKey = githubKeyInput.value;
     dataStore.githubKey = githubKey; // Update the dataStore

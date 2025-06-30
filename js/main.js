@@ -1,12 +1,12 @@
-// import { fetchJson, getUrlParam, getIssueData, period2Long, menuActiveToggle } from '/js/m_utilites.js';
+window.TH_TOKEN = new Date().getTime();
 const { 
     fetchJson, getUrlParam, getIssueData, period2Long, 
     menuActiveToggle
-} = await import(`/js/m_utilites.js?t=${new Date().getTime()}`);
+} = await import(`/js/m_utilites.js?t=${window.TH_TOKEN}`);
 // import dataStore from '/js/m_data_store.js';
-const { dataStore } = await import(`/js/m_data_store.js?t=${new Date().getTime()}`);
+const { dataStore } = await import(`/js/m_data_store.js?t=${window.TH_TOKEN}`);
 // import { issue2Page } from "/js/m_page_manipulation.js";
-const { issue2Page, removeAllChildren } = await import(`/js/m_page_manipulation.js?t=${new Date().getTime()}`);
+const { issue2Page, removeAllChildren } = await import(`/js/m_page_manipulation.js?t=${window.TH_TOKEN}`);
 
   
 
@@ -32,7 +32,7 @@ function getCurrentIssue(archiveData, certainPeriod){
     return archiveData.find(d => d.status === "current");
 }
 
-const getDataJob = fetchJson(`/archive.json?t=${new Date().getTime()}`)
+const getDataJob = fetchJson(`/archive.json?t=${window.TH_TOKEN}`)
     .then(archiveData=>{
         fillArchiveList(archiveData);
         const certainPeriod = getUrlParam('period');

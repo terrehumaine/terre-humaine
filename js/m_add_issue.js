@@ -1,8 +1,8 @@
 const  { fetchJson, period2Long, getIssueData, 
     menuActiveToggle 
-} = await import(`/js/m_utilites.js?t=${new Date().getTime()}`);
-const { pushFilesToGitHub } = await import(`/js/m_github_api.js?t=${new Date().getTime()}`);
-const { removeAllChildren } = await import(`/js/m_page_manipulation.js?t=${new Date().getTime()}`);
+} = await import(`/js/m_utilites.js?t=${window.TH_TOKEN}`);
+const { pushFilesToGitHub } = await import(`/js/m_github_api.js?t=${window.TH_TOKEN}`);
+const { removeAllChildren } = await import(`/js/m_page_manipulation.js?t=${window.TH_TOKEN}`);
 
 
 const dialogWindow = document.getElementById('article-modal');
@@ -89,6 +89,35 @@ function mainImageInputHandler(event) {
     }
 }
 
+function fileJournalInputHandler(event) {
+    const file = event.target.files[0];
+    console.log(file);
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const fileName = file.name;
+            const fileExtension = fileName.split('.').pop().toLowerCase();
+            const dataUrl = e.target.result;
+            const base64String = dataUrl.split(',')[1];
+
+            const binaryData = atob(base64String);
+            const byteArray = new Uint8Array(binaryData.length);
+            for (let i = 0; i < binaryData.length; i++) {
+                byteArray[i] = binaryData.charCodeAt(i);
+            }
+
+            event.target.fileData = {
+                name: fileName,
+                type: file.type,
+                byteArray: byteArray,
+                extension: fileExtension,
+            };
+            // console.log("fileJournalInput", fileJournalInput.fileData);
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
 function issueEditorPreparation() {
     const wholeForm = document.querySelector('.form-main-article');
     // return if the form is already prepared
@@ -99,6 +128,9 @@ function issueEditorPreparation() {
     // Prepare the form
     const mainImageInput = document.querySelector('#form-main-image-input');
     mainImageInput.addEventListener('change', mainImageInputHandler);
+
+    const fileJournalInput = document.querySelector('#file-journal');
+    fileJournalInput.addEventListener('change', fileJournalInputHandler);
 
     const submitIssueButton = document.querySelector('.submit-issue');    
     submitIssueButton.addEventListener('click', async () => {
@@ -134,9 +166,25 @@ function issueEditorPreparation() {
         filesToPush.push(issueJsonFile);
 
         // prepare issueFile
+        // Prepare docx/pdf
+        const fileJournalInput = document.querySelector('#file-journal');
+        const fileData = fileJournalInput.fileData;
+        let fileName = null
+        if(fileData) {
+            fileName = `Terre Humaine - ${formPeriod}.${fileData.extension}`
+            const filePath = `archive/${fileName}`;
+            const fileType = fileData.type;
+            const journalFile = {
+                path: filePath,
+                content: fileData.byteArray,
+                type: fileType
+            };
+            filesToPush.push(journalFile);
+            delete formData.fileData; 
+        }
 
         // Prepare archive.json
-        const archiveData = await fetchJson('archive.json');
+        const archiveData = await fetchJson(`archive.json?t=${window.TH_TOKEN}`);
         const lastIssue = archiveData[0];
         const existingPeriod = archiveData.find(d => d.period === formPeriod);
         
@@ -148,7 +196,7 @@ function issueEditorPreparation() {
                 period: formPeriod,
                 issueNumber: lastIssue.issueNumber + 1,
                 status: 'draft',
-                // file: `Terre Humaine - ${formPeriod}.docx`
+                file: fileData? fileName : null
             };
             const archiveDataNew = JSON.stringify([newIssue, ...archiveData], null, 4);
             const archiveJsonType = 'application/json';
@@ -159,7 +207,10 @@ function issueEditorPreparation() {
             };
             filesToPush.push(archiveJsonFile);
         }
-        // console.log({filesToPush: JSON.stringify(filesToPush, null, 4)});    
+
+
+
+        console.log({filesToPush: JSON.stringify(filesToPush, null, 4)});    
         // Push files to GitHub
         pushFilesToGitHub({ files: filesToPush, commitMessage: 'Submitting/editing new issue' })
             .then(() => {
@@ -289,6 +340,8 @@ async function getFormData() {
         });
     });
 
+    const mainImageInput = document.querySelector('#form-main-image-input');
+
     // Create the final object structure
     const articleData = {
         period,
@@ -299,7 +352,8 @@ async function getFormData() {
             postScriptums: [],
             imageBase64: imageByteArray 
         },
-        articlesMineurs: secondaryArticles
+        articlesMineurs: secondaryArticles,
+        fileData: mainImageInput.fileData,
     };
 
     return articleData;
@@ -318,7 +372,7 @@ function clearTheForm() {
 }
 
 function populatePeriodSelector() {
-    return fetchJson('archive.json')
+    return fetchJson(`/archive.json?t=${window.TH_TOKEN}`)
         .then(data => {
             const periodSelector = document.getElementById('period-selector');
             
