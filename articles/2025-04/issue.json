@@ -1,10 +1,31 @@
 {
     "period": "2025-04",
     "article": {
-        "title": "",
-        "html": "<p><br></p>",
-        "author": "",
+        "title": "Vouloir changer le monde",
+        "html": "<p class=\"ql-align-justify\">\tEsther Duflo a été prix Nobel d'économie en 2019 pour ses travaux sur la lutte contre la pauvreté.</p><p class=\"ql-align-justify\">\t<em>Son enfance</em>. « Ma mère, Violaine, était médecin pédiatre, elle était engagée dans une ONG protestante qui aidait les enfants victimes de la guerre. Elle travaillait beaucoup, voyageait au Sahara, au Salvador, au Rwanda, à Madagascar. Elle nous montrait des photos de ce qu'elle avait vu. Toute petite, j'avais conscience que certains enfants avaient des vies extrêmement différentes de la mienne et qu'un jour je ferais quelque chose. Adolescente, je disais : je veux faire de vraies choses. Pas seulement mettre un pas devant l'autre. »</p><p class=\"ql-align-justify\">\t<em>Elle voulait changer le monde.</em> « Vouloir changer le monde, c'était très naïf. Il fallait avancer étape par étape, faire les choses une à une. Si on se dit : il faut trouver une solution pour éliminer la pauvreté ou vaincre le cancer, la question est mal posée. Le problème est bien posé quand on le découpe en équations plus petites, et qu'on les résout une par une, de la même manière que mon approche de la pauvreté consiste à la scinder en problèmes plus faciles à comprendre. A l'école normale, j'étudiais dans le confort, j'avais une vie extraordinairement protégée et ce confort a commencé à me peser. J'avais toujours ce rêve grandiloquent d'améliorer la vie des gens, mais je n'avais rien fait pour avancer ! A 20 ans, on ne peut pas se satisfaire du monde tel qu'il est. » </p><p class=\"ql-align-justify\">\t<em>Elle travaillait beaucoup.</em> « La vie est faite de choix. J'ai toujours beaucoup travaillé, tout le temps, même si j'essaye d'expliquer aux étudiants que la vie est un marathon, pas un sprint. Ma chance, c'est que j'ai toujours aimé ce que je fais et j'ai fait ce pourquoi j'ai du talent. Donc je peux passer beaucoup de temps à travailler sans avoir le sentiment de rien sacrifier. » </p><p class=\"ql-align-justify\">\t<em>Elle reste humble</em>. « L'idée de mon travail, c'est justement qu'il faut être très humble sur ce que nous savons et ce que nous ne savons pas, et que souvent les intuitions sont fausses, celles des économistes comme celles des politiques. Les faits ne correspondent pas au monde purifié des modèles. Il faut donc expérimenter et évaluer avant d'adopter des politiques ou des programmes à grande échelle. » Cela dit… le nombre de miséreux ne cesse de croître dans le monde.</p><p><br></p>",
+        "author": "Esther Duflo",
         "postScriptums": []
     },
-    "articlesMineurs": []
+    "articlesMineurs": [
+        {
+            "title": "A quoi servent les religions ?",
+            "html": "<p class=\"ql-align-justify\">\tAujourd'hui, l'instrumentalisation de la religion par des régimes politiques est en plein essor dans le monde. Que ce soit le soutien de l'Église orthodoxe russe à l'invasion de l'Ukraine par la Russie, le rôle des extrémistes religieux au sein du Hamas, du Hezbollah et du gouvernement israélien, ou la promotion d'un rôle privilégié de l'hindouisme par le BJP de Narendra Modi en Inde, des autocrates et des populistes de tous horizons n'hésitent pas à mobiliser le soutien religieux pour asseoir leur légitimité. En retour, ils octroient aux mouvements religieux divers privilèges en matière d'emploi, d'éducation, de fiscalité, et même, dans certains pays, le droit d'imposer des obligations religieuses à tous les citoyens.</p><p class=\"ql-align-justify\">\tDans ce contexte - et lorsqu'on observe qu'en Turquie, même un régime supposé laïque recourt de plus en plus fréquemment à l'instrumentalisation de l'islam à des fins politiques -, il pourrait sembler légitime de considérer la laïcité à la française comme le seul rempart fiable contre les abus du pouvoir religieux.</p>",
+            "author": "Emmanuel Haroul et Paul Seabright. Le Monde, 4-11-24"
+        },
+        {
+            "title": "",
+            "html": "<p class=\"ql-align-justify\">\t« Il faut détruire toutes les religions afin de reconstruire Dieu. J'entends : le reconstruire dans l'homme. Dieu, c'est la vérité, c'est la justice, c'est la bonté, c'est le droit et c'est l'amour. »</p>",
+            "author": "Victor Hugo"
+        },
+        {
+            "title": "Marc Bloch et la patrie universelle",
+            "html": "<p class=\"ql-align-justify\">\tEmmanuel Macron a annoncé l’entrée au Panthéon de l’historien Marc Bloch, grand témoin de la débâcle de 1940 et l’un des organisateurs de la Résistance dans la région lyonnaise, avant d’être fusillé par les nazis. Après Missak Manouchian, est-ce la résistance qui est à nouveau honorée ? </p><p class=\"ql-align-justify\">\tBien sûr. Et, au premier lieu, le martyr de Marc Bloch, fusillé par les nazis le 16 juin 1944. Il entre au Panthéon après Jean Moulin, en 1964, puis Pierre Brossolette, Germaine Tillion, Geneviève de Gaulle-Anthonioz et Jean Zay en 2015. Alors que les derniers acteurs et témoins de la Seconde Guerre Mondiale, de la Résistance et de l'Occupation disparaissent, c'est autant la Résistance effective – Marc Bloch voulait jusqu'au bout combattre les armes à la main, que la Résistance intellectuelle qui est consacrée, comme avant, avec Germaine Tillion.</p><p class=\"ql-align-justify\">\tBloch n'est pas seulement un intellectuel résistant, il est aussi un « fou de la République ». Lui, normalien, fils de normaliens, l'itinéraire de Marc Bloch raconte aussi la volonté et le désir, depuis la Révolution française, d'intégration des Juifs à une nation considérée comme patrie universelle. </p>",
+            "author": "Yann Potin, Le Monde, 4/12/24"
+        },
+        {
+            "title": "Terre Humaine",
+            "html": "<p class=\"ql-align-justify\">\tChaque génération, sans doute, se croit vouée à refaire le monde. La mienne sait pourtant qu'elle ne le refera pas. Mais sa tâche est peut-être plus grande. Elle consiste à empêcher que le monde ne se défasse. Devant un monde menacé de désintégration, où nos grands inquisiteurs risquent d'établir pour toujours les royaumes de la mort, elle sait qu'elle devrait, dans une sorte de course folle contre la montre, restaurer entre les nations une paix qui ne soit pas celle de la servitude, réconcilier à nouveau travail et culture, et refaire avec tous les hommes une arche d'alliance. Il n'est pas sûr qu’elle ne puisse jamais accomplir cette tâche immense, mais il est sûr que, partout dans le monde, elle tient déjà son double pari de vérité et de liberté. » </p>",
+            "author": "Albert Camus, 1957"
+        }
+    ]
 }
