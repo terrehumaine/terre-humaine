@@ -405,9 +405,10 @@ function populatePeriodSelector() {
                 // Clear the fields of the form
                 clearTheForm();
 
-                if (selectedIssue) { // If the selected period already exists
+                if (sefillFormWithIssueDatalectedIssue) { // If the selected period already exists
                     getIssueData(selectedPeriod) // TODO: if it is not existing, just finish without error
                         .then(issueData => {
+                            issueData.file = selectedIssue.file; 
                             fillFormWithIssueData(issueData);
                         })
                         .catch(error => console.error('Error loading issue data:', error));
@@ -425,6 +426,7 @@ function fillFormWithIssueData(issueData) {
     document.getElementById('main-title').value = issueData.article.title || '';
     document.querySelector('#main-editor .ql-editor').innerHTML = issueData.article.html || '';
     document.getElementById('main-author').value = issueData.article.author || '';
+    document.querySelector('.issue-file-name').innerHTML = issueData.file? `(${issueData.file })`: '';
 
     // Clear and populate secondary articles
     const secondaryContainer = document.getElementById('secondary-articles-container');
